@@ -1,17 +1,8 @@
-import os
-import hvac
-
-# API stuff
 from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
-vault = hvac.Client
-vault = hvac.Client(
-  url=os.environ['VAULT_ADDR'],
-  token=os.environ['TOKE']
-)
 
 class Task(BaseModel):
   name: str
