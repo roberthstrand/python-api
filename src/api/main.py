@@ -1,28 +1,27 @@
-from typing import Optional
 from fastapi import FastAPI
-from pydantic import BaseModel
+from helpers import Task
+
+from psql import get_all, get_task, new_task, update_task, delete_task
 
 app = FastAPI()
 
-class Task(BaseModel):
-  name: str
-  description: str
-  complete: Optional[bool] = None
-
-
 @app.get("/")
 def read_root():
-  return {"Test": "OK!"}
+  res = get_all()
+  return res
 
 @app.get("/{task_id}")
 def read_item(task_id: int):
-  return {"task_id": task_id}
+  return get_task(task_id)
 
-@app.put("/{task_id}")
-def update_item(task_id: int, item: Task):
-  return {
-  "task_id": task_id,
-  "task": item.name,
-  "description": item.description,
-  "complete": item.complete
-  }
+@app.put("/new")
+def read_item(item: Task):
+  return new_task(item)
+
+@app.put("/update")
+def read_item(item: Task):
+  return update_task(item)
+
+@app.post("/delete/{task_id}")
+def read_item(task_id: int):
+  return delete_task(task_id)
