@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from helpers import Task
-
 from psql import get_all, get_task, new_task, update_task, delete_task
 
 app = FastAPI()
